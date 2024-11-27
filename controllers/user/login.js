@@ -20,7 +20,7 @@ const login = async (req, res) => {
         }
 
         // Step 2: Check if the username exists
-        const user = await User.findOne({ username: req.body.user__name });
+        const user = await User.findOne({ user_name: req.body.user__name });
         if (!user) {
             return res.json({
                 message: "Username không tồn tại",
@@ -39,7 +39,7 @@ const login = async (req, res) => {
 
         // Step 4: Create JWT
         let payload = {
-            id: user._id,
+            id: user.user_id,
         };
         const token = createJWT(payload);
 

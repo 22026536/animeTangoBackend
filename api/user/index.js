@@ -1,4 +1,5 @@
 import express from "express";
+import routerAnime from "./anime.js";
 import routerForgotPassword from "./forgotPassword.js";
 import routerLogin from "./login.js";
 import routerLogOut from "./logOut.js";
@@ -13,5 +14,6 @@ router.use("/signUp",routerSignUp)
 router.use("/forgotPassword",routerForgotPassword)
 router.use("/uploadImage",routerUploadImage)
 router.use("/recommend",routerRecommend)
+router.use("/anime",routerAnime)
 
 export default router;
