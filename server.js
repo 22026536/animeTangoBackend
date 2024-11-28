@@ -16,7 +16,6 @@ app.use('/api', Router);
 mongoose.connect("mongodb+srv://sangvo22026526:5anG15122003@cluster0.rcd65hj.mongodb.net/anime_tango2"),{
   useNewUrlParser: true,
   useUnifiedTopology: true
-}.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
+};
 const PORT = process.env.PORT ;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
