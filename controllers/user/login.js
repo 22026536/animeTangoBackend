@@ -42,6 +42,7 @@ const login = async (req, res) => {
             id: user.user_id,
         };
         const token = createJWT(payload);
+        console.log(token)
 
         // Step 5: Set JWT cookie and respond with success
         res.cookie("jwt", token, { maxAge: 1000 * 60 * 30 });
