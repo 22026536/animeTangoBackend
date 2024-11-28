@@ -13,7 +13,10 @@ app.use(express.json());
 
 app.use('/api', Router);
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb+srv://sangvo22026526:5anG15122003@cluster0.rcd65hj.mongodb.net/anime_tango2"),{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 const PORT = process.env.PORT ;
