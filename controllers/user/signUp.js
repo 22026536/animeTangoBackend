@@ -56,7 +56,8 @@ const signUp = async (req, res) => {
             date_of_birth: req.body.birthday,
             sex: sex,
             password: hashedPassword,
-            user_name: req.body.user__name
+            user_name: req.body.user__name,
+            japanese_level: req.body.level
         });
         
         await newUser.save();

@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     role : { type: Number, required: true, default: 0 },
     reset_token : { type: String, default: null },
     reset_token_expire : { type: String, default: null },
+    japanese_level: {type: String, default: null}
 }, {
     collection: 'User' // Định rõ tên collection
   });
