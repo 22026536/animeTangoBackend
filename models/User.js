@@ -17,4 +17,4 @@ const userSchema = new mongoose.Schema({
     collection: 'User' // Định rõ tên collection
   });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('anime_tango2', userSchema);

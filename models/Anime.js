@@ -27,4 +27,4 @@ const animeSchema = new mongoose.Schema({
   collection: 'Anime' // Định rõ tên collection
 });
 
-export default mongoose.model('Anime', animeSchema);
+export default mongoose.model('anime_tango2', animeSchema);
