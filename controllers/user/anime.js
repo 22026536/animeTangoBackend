@@ -1,6 +1,8 @@
 import axios from "axios";
+import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
+
 export const animeInfo = async (req, res) => {
     try {
         const { anime_id } = req.body; // Lấy anime_id từ request body
@@ -66,7 +68,28 @@ export const animeSearch = async(req,res) =>{
 
 export const animeUnfinished = async(req,res) =>{
     try {
-        const response = await axios.post("https://animetangorecommendserver.onrender.com/unfinished",req.body);
+        const token = req.cookies.jwt;
+
+        if (!token) {
+            return res.json({
+                message: "Người dùng chưa đăng nhập",
+                success: false
+            });
+        }
+
+        if (isTokenExpired(token)) {
+            return res.json({
+                message: "Người dùng hết phiên đăng nhập",
+                success: false
+            });
+        }
+
+        const decoded = verifyToken(token);
+        const user_id = decoded.id;
+        const response = await axios.post("https://animetangorecommendserver.onrender.com/unfinished",{
+            user_id: user_id,
+            n: req.body.n
+        });
 
         res.status(200).json(response.data);
     } catch (error) {

@@ -34,6 +34,9 @@ export const singUpValidator = Joi.object({
     }),
     sex: Joi.required().messages({
         'any.required': 'Giới tính là bắt buộc.',
+    }),
+    level: Joi.required().messages({
+        'any.required': 'level là bắt buộc.',
     })
 });
 
