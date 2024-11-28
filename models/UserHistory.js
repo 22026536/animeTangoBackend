@@ -9,4 +9,4 @@ const userHistorySchema = new mongoose.Schema({
     collection: 'UserHistory' // Định rõ tên collection
   });
 
-export default mongoose.model('anime_tango2', userHistorySchema);
+export default mongoose.model('UserHistory', userHistorySchema);

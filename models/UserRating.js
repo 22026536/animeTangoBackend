@@ -9,4 +9,4 @@ const userRatingSchema = new mongoose.Schema({
     collection: 'UserRating' // Định rõ tên collection
   });
 
-export default mongoose.model('anime_tango2', userRatingSchema);
+export default mongoose.model('UserRating', userRatingSchema);
