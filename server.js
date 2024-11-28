@@ -10,7 +10,10 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: true,            // Cho phép tất cả các nguồn (origin)
+  credentials: true,       // Cho phép gửi cookie và header Authentication
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', Router);
