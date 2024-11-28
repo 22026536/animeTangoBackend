@@ -45,7 +45,11 @@ const login = async (req, res) => {
         console.log(token)
 
         // Step 5: Set JWT cookie and respond with success
-        res.cookie("jwt", token, { maxAge: 1000 * 60 * 30 });
+        res.cookie("jwt", token, {
+            httpOnly: true,        // Cookie chỉ truy cập qua HTTP, không qua JavaScript
+            secure: true,          // Bật chế độ bảo mật (chỉ hoạt động với HTTPS)
+            sameSite: "none",      // Đảm bảo cookies được gửi qua domain khác nhau
+            maxAge: 1000 * 60 * 30 })// Cookie tồn tại 30 phút maxAge: 1000 * 60 * 30 });
         //.cookie("name", user.full_name, { maxAge: 1000 * 60 * 30 }).cookie("birthday", user.date_of_birth, { maxAge: 1000 * 60 * 30 }).cookie("phoneNumber", user.phone_number, { maxAge: 1000 * 60 * 30 }).cookie("address", user.address, { maxAge: 1000 * 60 * 30 });
 
         if (user.role === 0) {
