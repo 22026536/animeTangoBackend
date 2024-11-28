@@ -23,7 +23,7 @@ export const userInfo = async (req, res) => {
         }
 
         const decoded = verifyToken(token);
-
+        const user_id = decoded.id;
         // Tìm người dùng bằng user_id trong MongoDB
         const user = await User.findOne({ user_id: decoded.id }).select(
             'user_img email phone_number full_name sex date_of_birth'

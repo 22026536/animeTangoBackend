@@ -27,4 +27,10 @@ const animeSchema = new mongoose.Schema({
   collection: 'Anime' // Định rõ tên collection
 });
 
+import AutoIncrementFactory from 'mongoose-sequence';
+
+// Khởi tạo AutoIncrement plugin
+const AutoIncrement = AutoIncrementFactory(mongoose);
+animeSchema.plugin(AutoIncrement, { inc_field: 'Anime_id' });
+
 export default mongoose.model('Anime', animeSchema);

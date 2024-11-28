@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
+import AutoIncrementFactory from 'mongoose-sequence';
+
+// Khởi tạo AutoIncrement plugin
+const AutoIncrement = AutoIncrementFactory(mongoose);
 
 const userSchema = new mongoose.Schema({
-    user_id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() }, // Tự động tạo
+    user_id: { type:Number, require: true,unique: true , index: true}, // Tự động tạo
     user_name: { type: String, required: true },
     password : { type: String, required: true },
     user_img : { type: String, default: null },
@@ -16,5 +20,7 @@ const userSchema = new mongoose.Schema({
 }, {
     collection: 'User' // Định rõ tên collection
   });
+
+  userSchema.plugin(AutoIncrement, { inc_field: 'user_id' });
 
 export default mongoose.model('User', userSchema);
