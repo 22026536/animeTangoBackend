@@ -6,6 +6,7 @@ import routerLogOut from "./logOut.js";
 import routerRecommend from "./recommend.js";
 import routerSignUp from "./signUp.js";
 import routerUploadImage from "./uploadImage.js";
+import routerUserInfo from "./userInfo.js";
 
 const router = express.Router()
 router.use("/login",routerLogin)
@@ -15,5 +16,6 @@ router.use("/forgotPassword",routerForgotPassword)
 router.use("/uploadImage",routerUploadImage)
 router.use("/recommend",routerRecommend)
 router.use("/anime",routerAnime)
+router.use("/userInfo",routerUserInfo)
 
 export default router;

@@ -87,16 +87,3 @@ export const recommendNaiveBayes = async (req, res) => {
     }
 }
 
-export const recommendLastestEpisode = async (req, res) => {
-    try {
-        const response = await axios.post("https://animetangorecommend.onrender.com/lastestepisode", {
-            user_id: user_id,
-            n: n, // Số lượng gợi ý
-        });
-
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Lỗi khi lấy dữ liệu từ mô hình Python" });
-    }
-}
