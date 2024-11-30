@@ -50,7 +50,7 @@ const login = async (req, res) => {
             sameSite: "None",      // Đảm bảo cookies được gửi qua domain khác nhau
             maxAge: 1000 * 60 * 30 })// Cookie tồn tại 30 phút maxAge: 1000 * 60 * 30 });
         //.cookie("name", user.full_name, { maxAge: 1000 * 60 * 30 }).cookie("birthday", user.date_of_birth, { maxAge: 1000 * 60 * 30 }).cookie("phoneNumber", user.phone_number, { maxAge: 1000 * 60 * 30 }).cookie("address", user.address, { maxAge: 1000 * 60 * 30 });
-
+        req.session.jwt = token
         if (user.role === 0) {
             return res.json({
                 message: "user",

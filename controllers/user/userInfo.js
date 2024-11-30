@@ -6,7 +6,7 @@ dotenv.config();
 // Lấy thông tin người dùng
 export const userInfo = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.session.jwt;
 
         if (!token) {
             return res.json({
@@ -50,7 +50,7 @@ export const userInfo = async (req, res) => {
 // Cập nhật thông tin người dùng
 export const userInfoUpdate = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.session.jwt;
 
         if (!token) {
             return res.json({
