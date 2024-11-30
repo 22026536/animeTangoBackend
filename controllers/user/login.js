@@ -42,8 +42,6 @@ const login = async (req, res) => {
             id: user.user_id,
         };
         const token = createJWT(payload);
-        console.log(token)
-        console.log("Set-Cookie headers:", res.getHeaders()["set-cookie"]);
 
         // Step 5: Set JWT cookie and respond with success
         res.cookie("jwt", token, {

@@ -1,20 +1,25 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { json } from 'express';
+import session from 'express-session';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
-import Anime from './models/Anime.js';
+import corMw from "./middlewares/cors.js";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI
 
 const app = express();
-app.use(cors({
-  origin: true,            // Cho phép tất cả các nguồn (origin)
-  credentials: true,       // Cho phép gửi cookie và header Authentication
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }  // Bỏ secure nếu không dùng HTTPS
 }));
-app.use(express.json());
+app.options('*', corMw);
+app.use(express.urlencoded({ extended: true }))
+app.use(json());
+app.set('trust proxy', 1)
 app.use(cookieParser());
 app.use('/api', Router);
 
