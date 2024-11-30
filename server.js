@@ -12,6 +12,12 @@ const MONGO_URI = process.env.MONGO_URI;
 const app = express();
 
 app.options('*', corMw);
+app.use(cors({
+  origin: 'https://anime-fawn-five.vercel.app',  // URL của frontend
+  credentials: true,  // Cho phép gửi cookies từ frontend
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
