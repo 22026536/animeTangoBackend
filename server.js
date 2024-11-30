@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
-import corMw from "./middlewares/cors.js";
 
 dotenv.config();
 
@@ -11,7 +10,11 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 
-app.options('*', corMw);
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
+  allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
 app.set('trust proxy', 1);
