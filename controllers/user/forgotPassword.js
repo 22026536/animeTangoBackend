@@ -53,7 +53,6 @@ export const forgotPassword = async (req, res) => {
                     success: false
                 });
             }
-            req.session.userEmail = userEmail;
             return res.json({
                 message: 'Mã xác thực đã được gửi đến email của bạn!',
                 success: true
@@ -66,7 +65,7 @@ export const forgotPassword = async (req, res) => {
 
 export const forgotPasswordCheck = async (req, res) => {
     try {
-        const userEmail = req.session.userEmail; // Retrieve email from session
+        const userEmail = req.body.gmail;
         const user = await User.findOne({ email: userEmail });
 
         if (!user) {
@@ -104,7 +103,7 @@ export const forgotPasswordChangePassword = async (req, res) => {
     try {
         const newPassword = req.body.password;
         const reNewPassword = req.body.rePassword;
-        
+        const userEmail = req.body.gmail;
         if (newPassword !== reNewPassword) {
             return res.json({
                 message: "nhập lại mật khẩu sai",
@@ -112,7 +111,6 @@ export const forgotPasswordChangePassword = async (req, res) => {
             });
         }
 
-        const userEmail = req.session.userEmail; // Retrieve email from session
         const hashedPassword = await bcryptjs.hash(newPassword, 11);
 
         const user = await User.findOneAndUpdate(

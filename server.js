@@ -4,7 +4,6 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
 import corMw from "./middlewares/cors.js";
-import redisClient from "./models/connectRedis.js";
 
 dotenv.config();
 
@@ -12,7 +11,6 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 
-await redisClient.connect()
 app.options('*', corMw);
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
