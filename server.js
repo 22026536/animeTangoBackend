@@ -1,10 +1,9 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors'; // Import thư viện cors
 import dotenv from 'dotenv';
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
-
+import cors from "cors"
 
 dotenv.config();
 

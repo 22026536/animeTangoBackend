@@ -123,3 +123,45 @@ export const animeUnfinished = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+export const getComment = async (req, res) => {
+    const { anime_id, episode_id } = req.body;
+  
+    // Kiểm tra đầu vào
+    if (!anime_id || !episode_id) {
+      return res.status(400).json({ error: 'Missing required anime_id or episode_id' });
+    }
+  
+    try {
+      // Lấy danh sách UserHistory có comment
+      const userHistories = await UserHistory.find({ 
+        Anime_id: anime_id, 
+        Episode_id: episode_id, 
+        Comment: { $ne: null } // Chỉ lấy những bản ghi có comment
+      });
+  
+      if (userHistories.length === 0) {
+        return res.status(404).json({ error: 'No comments found for this anime and episode' });
+      }
+  
+      // Lấy danh sách user_id từ UserHistory
+      const userIds = userHistories.map(history => history.User_id);
+  
+      // Lấy thông tin user từ bảng User
+      const users = await User.find({ user_id: { $in: userIds } });
+  
+      // Kết hợp dữ liệu User và UserHistory
+      const result = userHistories.map(history => {
+        const user = users.find(u => u.user_id === history.User_id);
+        return {
+          full_name: user ? user.full_name : null, // Lấy tên đầy đủ từ User
+          comment: history.Comment // Lấy comment từ UserHistory
+        };
+      });
+  
+      res.status(200).json(result);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
