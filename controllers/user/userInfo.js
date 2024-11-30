@@ -8,6 +8,7 @@ export const userInfo = async (req, res) => {
     try {
         const token = req.session.jwt;
         console.log(req.session)
+        console.log(req.cookies)
         if (!token) {
             return res.json({
                 message: "Người dùng chưa đăng nhập",

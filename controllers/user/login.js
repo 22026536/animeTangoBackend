@@ -52,6 +52,7 @@ const login = async (req, res) => {
         //.cookie("name", user.full_name, { maxAge: 1000 * 60 * 30 }).cookie("birthday", user.date_of_birth, { maxAge: 1000 * 60 * 30 }).cookie("phoneNumber", user.phone_number, { maxAge: 1000 * 60 * 30 }).cookie("address", user.address, { maxAge: 1000 * 60 * 30 });
         req.session.jwt = token
         console.log(req.session)
+        console.log(req.cookies)
         if (user.role === 0) {
             return res.json({
                 message: "user",
