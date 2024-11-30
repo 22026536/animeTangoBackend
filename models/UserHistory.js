@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const userHistorySchema = new mongoose.Schema({
     History_id: {type: Number, require: true, unique: true , index: true},
-    User_id: { type: Number, required: true },
+    User_id: { type: Number, required: true, index: true },
     Anime_id: { type: Number, required: true },
     Episode_id: { type: Number, required: true },
     Comment: { type: String },

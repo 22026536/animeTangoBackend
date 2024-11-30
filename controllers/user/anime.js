@@ -1,8 +1,6 @@
-import axios from "axios";
-import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
-
+import UserHistory from "../../models/UserHistory.js";
 export const animeInfo = async (req, res) => {
     try {
         const { anime_id } = req.body; // Lấy anime_id từ request body
@@ -30,70 +28,113 @@ export const animeInfo = async (req, res) => {
 
 export const animeLastestEpisode = async (req, res) => {
     try {
-        const response = await axios.post("https://animetangorecommendserver.onrender.com/lastestepisode", {
-            n: req.body.n, // Số lượng gợi ý
-        });
+        const { n = 10 } = req.body;
 
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Lỗi khi lấy dữ liệu từ mô hình Python" });
+        const latestAnime = await Anime.find().sort({ LastestEpisodeAired: -1 }).limit(n);
+        res.status(200).json(latestAnime);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 
 export const animeMostFavorites = async (req, res) => {
     try {
-        const response = await axios.post("https://animetangorecommendserver.onrender.com/mostfavorites", {
-            n: req.body.n, // Số lượng gợi ý
-        });
+        const { n = 10 } = req.body;
 
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Lỗi khi lấy dữ liệu từ mô hình Python" });
-    }
-}
-
-export const animeSearch = async(req,res) =>{
-    try {
-        const response = await axios.post("https://animetangorecommendserver.onrender.com/search",req.body);
-
-        res.status(200).json(response.data);
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Lỗi khi lấy dữ liệu từ mô hình Python" });
+        const popularAnime = await Anime.find().sort({ Favorites: -1 }).limit(n);
+        res.status(200).json(popularAnime);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 
 
-export const animeUnfinished = async(req,res) =>{
+export const animeSearch = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
+      const { JapaneseLevel, Type, Genre, limit, page } = req.body;
+      const { n = 10 } = req.body;
+      // Tạo bộ lọc linh hoạt
+      const filters = {};
+      if (JapaneseLevel) filters.JapaneseLevel = JapaneseLevel;
+      if (Type) filters.Type = Type;
+      if (Genre) filters.Genres = { $elemMatch: { $regex: Genre, $options: "i" } }; // Tìm kiếm phần tử trong mảng không phân biệt chữ hoa thường
+  
+      // Pagination (Phân trang)
+      const pageNumber = parseInt(page) || 1; // Mặc định page = 1
+      const pageSize = parseInt(n) || 10; // Mặc định limit = 10
+      const skip = (pageNumber - 1) * pageSize;
+  
+      // Thực hiện truy vấn với phân trang và sắp xếp
+      const results = await Anime.find(filters)
+        .sort({ LastestEpisodeAired: -1 }) // Sắp xếp giảm dần theo tập mới nhất
+        .skip(skip)
+        .limit(pageSize);
+  
+      res.status(200).json(results);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+  
 
-        if (!token) {
-            return res.json({
-                message: "Người dùng chưa đăng nhập",
-                success: false
-            });
+
+  export const animeUnfinished = async (req, res) => {
+    try {
+        // const token = req.cookies.jwt;
+
+        // if (!token) {
+        //     return res.status(401).json({
+        //         message: "Người dùng chưa đăng nhập",
+        //         success: false
+        //     });
+        // }
+
+        // if (isTokenExpired(token)) {
+        //     return res.status(401).json({
+        //         message: "Người dùng hết phiên đăng nhập",
+        //         success: false
+        //     });
+        // }
+
+        // const decoded = verifyToken(token);
+        const user_id = 6;
+        const { n = 10 } = req.body; // Số lượng kết quả trả về (default = 10)
+
+        // Lấy danh sách tập cuối của mỗi anime
+        const lastEpisodes = await AnimeEpisode.aggregate([
+            { $group: { _id: "$Anime_id", maxEpisode: { $max: "$Episode" } } }
+        ]);
+
+        // Lấy lịch sử xem của user, sắp xếp theo thời gian xem gần nhất
+        const userHistory = await UserHistory.find({ User_id: user_id })
+            .sort({ TimeWatches: -1 });
+
+        // Lọc các anime mà người dùng đã xem nhưng chưa hoàn thành
+        const unfinishedAnimeIds = [];
+        for (const history of userHistory) {
+            // Tìm tập cuối của anime trong `lastEpisodes`
+            const anime = lastEpisodes.find((ep) => ep._id === history.Anime_id);
+
+            // Nếu người dùng chưa xem tập cuối thì thêm vào danh sách
+            if (anime && history.Episode_id < anime.maxEpisode) {
+                unfinishedAnimeIds.push(history.Anime_id);
+            }
         }
 
-        if (isTokenExpired(token)) {
-            return res.json({
-                message: "Người dùng hết phiên đăng nhập",
-                success: false
-            });
-        }
+        // Truy vấn thông tin anime chưa hoàn thành
+        const unfinishedAnimes = await Anime.find({
+            Anime_id: { $in: unfinishedAnimeIds },
+        })
+            .limit(n); // Giới hạn số lượng kết quả trả về
 
-        const decoded = verifyToken(token);
-        const user_id = decoded.id;
-        const response = await axios.post("https://animetangorecommendserver.onrender.com/unfinished",{
-            user_id: user_id,
-            n: req.body.n
+        res.status(200).json({
+            unfinishedAnimes,
         });
-
-        res.status(200).json(response.data);
     } catch (error) {
         console.error("Error:", error);
-        res.status(500).json({ error: "Lỗi khi lấy dữ liệu từ mô hình Python" });
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};

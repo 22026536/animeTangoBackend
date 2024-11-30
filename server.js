@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
-
+import Anime from './models/Anime.js';
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI
@@ -20,7 +20,9 @@ app.use('/api', Router);
 
 mongoose.connect("mongodb+srv://sangvo22026526:5anG15122003@cluster0.rcd65hj.mongodb.net/anime_tango2"),{
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000, // Tăng thời gian chờ lên 30 giây
 };
+
 const PORT = process.env.PORT ;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

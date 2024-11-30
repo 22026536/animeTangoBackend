@@ -5,7 +5,7 @@ const animeSchema = new mongoose.Schema({
   Name: { type: String, required: true },
   English_Name: { type: String, required: true },
   Score: { type: Number, required: true },
-  Genres : { type: String, required: true },
+  Genres : [{ type: String, required: true }],
   Synopsis: { type: String, required: true },
   Type : { type: String, required: true },
   Episodes: [{ type: String, required: true }],
