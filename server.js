@@ -17,10 +17,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
   credentials: true // Bật 'Access-Control-Allow-Credentials'
 }));
-app.options('/api/*', cors({
-  origin: 'https://anime-fawn-five.vercel.app',
-  credentials: true
-}));
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
