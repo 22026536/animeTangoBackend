@@ -12,10 +12,14 @@ const MONGO_URI = process.env.MONGO_URI;
 const app = express();
 
 app.use(cors({
-  origin: 'https://anime-fawn-five.vercel.app/', 
+  origin: 'https://anime-fawn-five.vercel.app', 
   methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
   allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
   credentials: true // Bật 'Access-Control-Allow-Credentials'
+}));
+app.options('/api/*', cors({
+  origin: 'https://anime-fawn-five.vercel.app',
+  credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
