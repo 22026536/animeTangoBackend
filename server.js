@@ -15,6 +15,7 @@ app.use(cors({
   origin: '*', 
   methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
   allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
+  credentials: true // Bật 'Access-Control-Allow-Credentials'
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
