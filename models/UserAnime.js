@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import AutoIncrementFactory from 'mongoose-sequence';
 
 const userAnimeSchema = new mongoose.Schema({
     User_Anime_id: { type: Number, required: true, index: true },
@@ -10,7 +11,6 @@ const userAnimeSchema = new mongoose.Schema({
     collection: 'UserAnime', // Đặt tên collection
     timestamps: true, // Tự động thêm createdAt, updatedAt
 });
-
 const AutoIncrement = AutoIncrementFactory(mongoose);
 userAnimeSchema.plugin(AutoIncrement, { inc_field: 'user_anime_id' });
 
