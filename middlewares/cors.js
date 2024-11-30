@@ -1,6 +1,6 @@
 import cors from "cors";
 
-const whitelist = new Set(['https://anime-fawn-five.vercel.app/']);
+const whitelist = new Set(['https://anime-fawn-five.vercel.app']);
 
 const corOptions = {
     optionsSuccesStatus: 200,
