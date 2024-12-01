@@ -38,10 +38,13 @@ app.use(cors({
 // }));
 // app.options('*', corMw);
 app.use(session({
-  secret: 'your-secret-key',
+  secret: 'your-secret-key', // Secret để mã hóa session
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }  // Bỏ secure nếu không dùng HTTPS
+  cookie: {
+    secure: false, // Đặt thành true nếu dùng HTTPS
+    sameSite: 'None' // Để gửi cookie cross-origin
+  }
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());

@@ -7,7 +7,8 @@ dotenv.config();
 export const userInfo = async (req, res) => {
     try {
         const token = req.cookies['connect.sid']
-        const sessionId = req.cookies['connect.sid']; // Lấy giá trị của connect.sid
+        console.log('Cookies:', req.cookies); // In toàn bộ cookies nhận được
+        const sessionId = req.cookies['connect.sid'];
         console.log('Session ID:', sessionId);
         if (!token) {
             return res.json({
