@@ -29,6 +29,7 @@ app.use(cors({
   origin: 'http://localhost:5173', // Chỉ định frontend được phép
   methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
   allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
+  credentials: true, // Cho phép gửi cookie hoặc thông tin xác thực
 }));
 
 // app.use(cors({
