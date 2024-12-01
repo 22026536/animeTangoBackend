@@ -4,13 +4,17 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
-import path from "path";
+import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
+
+// Tạo đường dẫn tương tự __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Định tuyến để phục vụ các file tĩnh trong thư mục 'dist'
 app.use(express.static(path.join(__dirname, "./dist")));
@@ -19,6 +23,7 @@ app.use(express.static(path.join(__dirname, "./dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
+
 
 app.use(cors({
   origin: '*',  // URL của frontend
