@@ -6,8 +6,8 @@ dotenv.config();
 // Lấy thông tin người dùng
 export const userInfo = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
-        console.log(req.cookies)
+        const token = req.session.cookies.jwt;
+        console.log(req.session.cookies)
         if (!token) {
             return res.json({
                 message: "Người dùng chưa đăng nhập",
