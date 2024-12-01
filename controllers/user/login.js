@@ -50,8 +50,8 @@ const login = async (req, res) => {
             sameSite: 'None', // Ngăn chặn cookie bị gửi qua các request cross-site (tùy trường hợp bạn có thể dùng 'Strict' hoặc 'None')
             maxAge: 1000 * 60 * 30 })// Cookie tồn tại 30 phút maxAge: 1000 * 60 * 30 });
         //.cookie("name", user.full_name, { maxAge: 1000 * 60 * 30 }).cookie("birthday", user.date_of_birth, { maxAge: 1000 * 60 * 30 }).cookie("phoneNumber", user.phone_number, { maxAge: 1000 * 60 * 30 }).cookie("address", user.address, { maxAge: 1000 * 60 * 30 });
-        console.log(req.cookies);
-        console.log(req.session.cookie)
+        const sessionId = req.cookies['connect.sid']; // Lấy giá trị của connect.sid
+        console.log('Session ID:', sessionId);
         if (user.role === 0) {
             return res.json({
                 message: "user",

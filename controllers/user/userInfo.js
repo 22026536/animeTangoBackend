@@ -6,8 +6,9 @@ dotenv.config();
 // Lấy thông tin người dùng
 export const userInfo = async (req, res) => {
     try {
-        const token = null
-        console.log(req.session.cookie)
+        const token = req.cookies['connect.sid']
+        const sessionId = req.cookies['connect.sid']; // Lấy giá trị của connect.sid
+        console.log('Session ID:', sessionId);
         if (!token) {
             return res.json({
                 message: "Người dùng chưa đăng nhập",
