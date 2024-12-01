@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import path from "path";
 import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
 dotenv.config();
