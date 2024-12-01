@@ -4,12 +4,21 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import path from "path";
 import Router from './api/user/index.js';
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
+
+// Định tuyến để phục vụ các file tĩnh trong thư mục 'dist'
+app.use(express.static(path.join(__dirname, "./dist")));
+
+// Tất cả các request khác sẽ trả về file index.html (React xử lý routing)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./dist/index.html"));
+});
 
 app.use(cors({
   origin: '*',  // URL của frontend
