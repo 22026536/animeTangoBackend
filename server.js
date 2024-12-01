@@ -27,7 +27,8 @@ app.get("*", (req, res) => {
 
 app.use(cors({
   origin: '*', // Chỉ định frontend được phép
-  credentials: true,              // Cho phép gửi cookie
+  methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
+  allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
 }));
 
 // app.use(cors({
