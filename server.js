@@ -1,5 +1,4 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
@@ -7,6 +6,8 @@ import mongoose from 'mongoose';
 import path from "path";
 import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
+import corMw from "./middlewares/cors.js";
+;
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -26,21 +27,12 @@ app.get("*", (req, res) => {
 });
 
 
-app.use(cors({
-  origin: '*',  // URL của frontend
-  credentials: true,  // Cho phép gửi cookies từ frontend
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.options('*', corMw);
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true, // Cần bật nếu dùng HTTPS
-    httpOnly: true,
-    sameSite: 'None' // Cần thiết cho cross-origin
-  }
+  saveUninitialized: true,
+  cookie: { secure: false }  // Bỏ secure nếu không dùng HTTPS
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());

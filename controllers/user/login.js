@@ -45,14 +45,12 @@ const login = async (req, res) => {
 
         // Step 5: Set JWT cookie and respond with success
         res.cookie("jwt", token, {
-            httpOnly: true,        // Cookie chỉ truy cập qua HTTP, không qua JavaScript
-            secure: true,          // Bật chế độ bảo mật (chỉ hoạt động với HTTPS)
-            sameSite: "None",      // Đảm bảo cookies được gửi qua domain khác nhau
+            httpOnly: true, // Cookie chỉ được truy cập qua HTTP, không phải JavaScript
+            secure: true,   // Chỉ gửi cookie qua HTTPS (bắt buộc khi chạy trên môi trường production)
+            sameSite: 'Lax', // Ngăn chặn cookie bị gửi qua các request cross-site (tùy trường hợp bạn có thể dùng 'Strict' hoặc 'None')
             maxAge: 1000 * 60 * 30 })// Cookie tồn tại 30 phút maxAge: 1000 * 60 * 30 });
         //.cookie("name", user.full_name, { maxAge: 1000 * 60 * 30 }).cookie("birthday", user.date_of_birth, { maxAge: 1000 * 60 * 30 }).cookie("phoneNumber", user.phone_number, { maxAge: 1000 * 60 * 30 }).cookie("address", user.address, { maxAge: 1000 * 60 * 30 });
-        req.session.jwt = token
-        console.log(req.session)
-        console.log(req.cookies)
+        console.log(req.cookies.jwt)
         if (user.role === 0) {
             return res.json({
                 message: "user",
