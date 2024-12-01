@@ -26,7 +26,7 @@ app.get("*", (req, res) => {
 });
 
 app.use(cors({
-  origin: '*', // Chỉ định frontend được phép
+  origin: '*http://localhost:5173', // Chỉ định frontend được phép
   methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
   allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
 }));
