@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import dotenv from 'dotenv';
 import express, { json } from 'express';
+import session from 'express-session';
 import mongoose from 'mongoose';
 import path from "path";
 import { fileURLToPath } from "url";
@@ -36,12 +37,12 @@ app.use(cors({
 //   credentials: true,              // Cho phép gửi cookie
 // }));
 // app.options('*', corMw);
-// app.use(session({
-//   secret: 'your-secret-key',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: false }  // Bỏ secure nếu không dùng HTTPS
-// }));
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }  // Bỏ secure nếu không dùng HTTPS
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
 app.set('trust proxy', 1);
