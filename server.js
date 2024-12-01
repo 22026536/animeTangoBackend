@@ -5,16 +5,14 @@ import express, { json } from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import Router from './api/user/index.js';
-import corMw from "./middlewares/cors.js";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 
-app.options('*', corMw);
 app.use(cors({
-  origin: 'https://anime-fawn-five.vercel.app',  // URL của frontend
+  origin: '*',  // URL của frontend
   credentials: true,  // Cho phép gửi cookies từ frontend
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
