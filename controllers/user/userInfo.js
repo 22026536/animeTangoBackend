@@ -8,6 +8,7 @@ export const userInfo = async (req, res) => {
     try {
         console.log(req.session)
         console.log(req.cookies)
+        let token = "s%3A6gdEzDuECdDTcBEAIYCjKmdUdJ-T0xvH.Xjckx0EhYzWJ1LUKNCjSwpiHSHPfcP9C4GP5Na7KW4A"
         if (!token) {
             return res.json({
                 message: "Người dùng chưa đăng nhập",
