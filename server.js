@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import path from "path";
 import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
-import corMw from "./middlewares/cors.js";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -27,10 +26,15 @@ app.get("*", (req, res) => {
 });
 
 app.use(cors({
-  origin: 'https://anime-fawn-five.vercel.app', // Chỉ định frontend được phép
+  origin: '*', // Chỉ định frontend được phép
   credentials: true,              // Cho phép gửi cookie
 }));
-app.options('*', corMw);
+
+// app.use(cors({
+//   origin: 'https://anime-fawn-five.vercel.app', // Chỉ định frontend được phép
+//   credentials: true,              // Cho phép gửi cookie
+// }));
+// app.options('*', corMw);
 app.use(session({
   secret: 'your-secret-key',
   resave: false,
