@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from "cors";
 import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
@@ -7,7 +8,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
 import corMw from "./middlewares/cors.js";
-;
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -26,7 +26,10 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
 
-
+app.use(cors({
+  origin: 'https://anime-fawn-five.vercel.app', // Chỉ định frontend được phép
+  credentials: true,              // Cho phép gửi cookie
+}));
 app.options('*', corMw);
 app.use(session({
   secret: 'your-secret-key',
