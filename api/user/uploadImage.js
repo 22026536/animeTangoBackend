@@ -13,7 +13,7 @@ routerUploadImage.post("/", upload.single("image"), async (req, res) => {
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
         const cldRes = await handleUpload(dataURI);
 
-        const token = req.cookies.jwt;
+        const token = req.body.jwt;
         if(!token) {
             res.json({
                 message: "Người dùng chưa đăng nhập",
