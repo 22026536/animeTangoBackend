@@ -46,7 +46,7 @@ const signUp = async (req, res) => {
 
         // Hash the password
         const hashedPassword = await bcryptjs.hash(req.body.password, 11);
-        const sex = req.body.sex === 'male' ? 1 : 2;
+        const sex = req.body.sex ;
 
         // Add user to the database
         const newUser = new User({

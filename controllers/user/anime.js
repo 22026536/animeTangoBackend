@@ -1,3 +1,4 @@
+import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
 import UserAnime from "../../models/UserAnime.js";
@@ -22,7 +23,7 @@ export const animeInfo = async (req, res) => {
 
         let rated = null; // Mặc định khi chưa đăng nhập
 
-        if (token && !isTokenExpired(token)) {
+        if (token || !isTokenExpired(token)) {
 
             const decoded = verifyToken(token);
             const user_id = decoded.id;
