@@ -1,8 +1,10 @@
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
 import UserAnime from "../../models/UserAnime.js";
+import UserRating from "../../models/UserRating.js";
 export const animeInfo = async (req, res) => {
     try {
+        const token = req.body.jwt;
         const { anime_id } = req.body; // Lấy anime_id từ request body
 
         if (!anime_id) {
@@ -18,13 +20,30 @@ export const animeInfo = async (req, res) => {
         // Tìm danh sách các tập của anime
         const episodes = await AnimeEpisode.find({ Anime_id: anime_id }).sort({ Episode: 1 });
 
-        // Trả về thông tin anime và danh sách tập
-        return res.status(200).json({ anime, episodes });
+        let rated = null; // Mặc định khi chưa đăng nhập
+
+        if (token && !isTokenExpired(token)) {
+
+            const decoded = verifyToken(token);
+            const user_id = decoded.id;
+
+            // Tìm trạng thái `rated` trong UserRating
+            const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
+            rated = userRating ? userRating.rating : 0; // Nếu không tìm thấy thì mặc định là 0
+        }
+
+        // Trả về thông tin anime, danh sách tập và trạng thái `rated`
+        return res.status(200).json({
+            anime,
+            episodes,
+            rated,
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
     }
 };
+
 
 export const animeLastestEpisode = async (req, res) => {
     try {

@@ -6,10 +6,7 @@ dotenv.config();
 // Lấy thông tin người dùng
 export const userInfo = async (req, res) => {
     try {
-        const token = req.cookies['connect.sid']
-        console.log('Cookies:', req.cookies); // In toàn bộ cookies nhận được
-        const sessionId = req.cookies['connect.sid'];
-        console.log('Session ID:', sessionId);
+        const token = req.body.jwt
         if (!token) {
             return res.json({
                 message: "Người dùng chưa đăng nhập",
@@ -52,7 +49,7 @@ export const userInfo = async (req, res) => {
 // Cập nhật thông tin người dùng
 export const userInfoUpdate = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.body.jwt;
 
         if (!token) {
             return res.json({
