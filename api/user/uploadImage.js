@@ -28,7 +28,7 @@ routerUploadImage.post("/", upload.single("image"), async (req, res) => {
         }
 
         const decode = verifyToken(token);
-        await User.findOneAndUpdate({User_id: decode.id}, { user_img: cldRes.url });
+        await User.findOneAndUpdate({user_id: decode.id}, { user_img: cldRes.url });
         res.json({
             message: cldRes,
             success: true
