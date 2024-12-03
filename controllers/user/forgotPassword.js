@@ -26,7 +26,7 @@ export const forgotPassword = async (req, res) => {
         user.reset_token = hashedToken;
         user.reset_token_expire = expireToken;
         await user.save();
-        req.session.userEmail = userEmail
+
         // Send verification email
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
@@ -65,7 +65,7 @@ export const forgotPassword = async (req, res) => {
 
 export const forgotPasswordCheck = async (req, res) => {
     try {
-        const userEmail = req.session.userEmail;  // Lấy email từ session
+        const userEmail = req.body.gmail;  // Lấy email từ session
         const user = await User.findOne({ email: userEmail });
 
         if (!user) {
@@ -103,7 +103,7 @@ export const forgotPasswordChangePassword = async (req, res) => {
     try {
         const newPassword = req.body.password;
         const reNewPassword = req.body.rePassword;
-        const userEmail = req.session.userEmail;  // Lấy email từ session
+        const userEmail = req.body.gmail;  // Lấy email từ session
         if (newPassword !== reNewPassword) {
             return res.json({
                 message: "nhập lại mật khẩu sai",

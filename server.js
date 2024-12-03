@@ -2,10 +2,7 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import dotenv from 'dotenv';
 import express, { json } from 'express';
-import session from 'express-session';
 import mongoose from 'mongoose';
-import path from "path";
-import { fileURLToPath } from "url";
 import Router from './api/user/index.js';
 dotenv.config();
 
@@ -13,23 +10,10 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const app = express();
 
-// Tạo đường dẫn tương tự __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Định tuyến để phục vụ các file tĩnh trong thư mục 'dist'
-app.use(express.static(path.join(__dirname, "./dist")));
-
-// Tất cả các request khác sẽ trả về file index.html (React xử lý routing)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./dist/index.html"));
-});
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Chỉ định frontend được phép
+  origin: '*', // Chỉ định frontend được phép
   methods: ['GET', 'POST'], // Cho phép các phương thức GET và POST
-  allowedHeaders: ['Content-Type'], // Cho phép header Content-Type
-  credentials: true, // Cho phép gửi cookie hoặc thông tin xác thực
 }));
 
 // app.use(cors({
@@ -37,15 +21,15 @@ app.use(cors({
 //   credentials: true,              // Cho phép gửi cookie
 // }));
 // app.options('*', corMw);
-app.use(session({
-  secret: 'your-secret-key', // Secret để mã hóa session
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false, // Đặt thành true nếu dùng HTTPS
-    sameSite: 'None' // Để gửi cookie cross-origin
-  }
-}));
+// app.use(session({
+//   secret: 'your-secret-key', // Secret để mã hóa session
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     secure: false, // Đặt thành true nếu dùng HTTPS
+//     sameSite: 'None' // Để gửi cookie cross-origin
+//   }
+// }));
 app.use(express.urlencoded({ extended: true }));
 app.use(json());
 app.set('trust proxy', 1);
