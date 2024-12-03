@@ -29,7 +29,7 @@ export const animeInfo = async (req, res) => {
 
             // Tìm trạng thái `rated` trong UserRating
             const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
-            rated = userRating ? userRating.rating : 0; // Nếu không tìm thấy thì mặc định là 0
+            rated = userRating ? userRating.rating : null; // Nếu không tìm thấy thì mặc định là 0
         }
 
         // Trả về thông tin anime, danh sách tập và trạng thái `rated`
