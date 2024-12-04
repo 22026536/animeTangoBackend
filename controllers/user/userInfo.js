@@ -25,7 +25,7 @@ export const userInfo = async (req, res) => {
         const user_id = decoded.id;
         // Tìm người dùng bằng user_id trong MongoDB
         const user = await User.findOne({ user_id: user_id }).select(
-            'user_img email phone_number full_name sex date_of_birth'
+            'user_img email phone_number full_name sex date_of_birth japanese_level'
         );
 
         if (!user) {

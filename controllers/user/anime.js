@@ -23,14 +23,15 @@ export const animeInfo = async (req, res) => {
 
         let rated = null; // Mặc định khi chưa đăng nhập
 
-        if (token || !isTokenExpired(token)) {
+        if (token) {
+            if(isTokenExpired(token)){
+                const decoded = verifyToken(token);
+                const user_id = decoded.id;
 
-            const decoded = verifyToken(token);
-            const user_id = decoded.id;
-
-            // Tìm trạng thái `rated` trong UserRating
-            const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
-            rated = userRating ? userRating.rating : null; // Nếu không tìm thấy thì mặc định là 0
+                // Tìm trạng thái `rated` trong UserRating
+                const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
+                rated = userRating ? userRating.rating : null; // Nếu không tìm thấy thì mặc định là 0
+            }
         }
 
         // Trả về thông tin anime, danh sách tập và trạng thái `rated`
