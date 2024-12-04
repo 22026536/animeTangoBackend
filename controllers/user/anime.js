@@ -22,18 +22,14 @@ export const animeInfo = async (req, res) => {
         const episodes = await AnimeEpisode.find({ Anime_id: anime_id }).sort({ Episode: 1 });
 
         let rated = null; // Mặc định khi chưa đăng nhập
-        console.log(token)
         if (token) {
-            if(isTokenExpired(token)){
+            if(!isTokenExpired(token)){
                 const decoded = verifyToken(token);
                 const user_id = decoded.id;
 
                 // Tìm trạng thái `rated` trong UserRating
                 const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
                 rated = userRating ? userRating.Rating : null; // Nếu không tìm thấy thì mặc định là 0
-                console.log(user_id)
-                console.log(userRating)
-                console.log(rated)
             }
         }
 
