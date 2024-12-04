@@ -22,7 +22,7 @@ export const animeInfo = async (req, res) => {
         const episodes = await AnimeEpisode.find({ Anime_id: anime_id }).sort({ Episode: 1 });
 
         let rated = null; // Mặc định khi chưa đăng nhập
-
+        console.log(token)
         if (token) {
             if(isTokenExpired(token)){
                 const decoded = verifyToken(token);
