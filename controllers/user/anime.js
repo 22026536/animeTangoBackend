@@ -29,6 +29,9 @@ export const animeInfo = async (req, res) => {
 
                 // Tìm trạng thái `rated` trong UserRating
                 const userRating = await UserRating.find({ User_id: user_id, Anime_id: anime_id });
+                console.log(userRating)
+                console.log(userRating[0])
+                console.log(userRating[0].Rating)
                 rated = userRating.length > 0 ? userRating[0].Rating : null; // Truy cập phần tử đầu tiên của mảng
             }
         }
