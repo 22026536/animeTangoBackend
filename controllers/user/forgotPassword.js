@@ -29,13 +29,18 @@ export const forgotPassword = async (req, res) => {
 
         // Send verification email
         const transporter = nodemailer.createTransport({
-            host: process.env.MAIL_HOST,
-            port: process.env.MAIL_PORT,
-            secure: false,
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             service: 'gmail',
             auth: {
+                type: "OAUTH2",
                 user: process.env.MY_EMAIL,
-                pass: process.env.MY_EMAIL_PASSWORD
+                clientId: "vfo9u2o435uk2jjfvlfdkpg284u3.apps.googleusercontent.com",
+                clientSecret: "og029503irgier0oifwori",
+                refreshToken: "2093402i3jflj;geijgp039485puihsg[-9a[3;wjenjk,ucv[3485p0o485uyr;ifasjsdo283wefwf345w]fw2984329oshfsh",
+                accessToken: "owiejfw84u92873598yiuhvsldiis9er0235983isudhfdosudv3k798qlk3j4094too283982fs",
+                expires: 3599
             }
         });
 
@@ -89,7 +94,7 @@ export const forgotPasswordCheck = async (req, res) => {
                 success: false
             });
         }
-        
+
         return res.json({
             message: "Mã xác thực chính xác",
             success: true
