@@ -6,7 +6,7 @@ import UserRating from "../../models/UserRating.js";
 export const animeInfo = async (req, res) => {
     try {
         const token = req.body.jwt;
-        const { anime_id } = req.body; // Lấy anime_id từ request body
+        const anime_id = req.body.anime_id; // Lấy anime_id từ request body
 
         if (!anime_id) {
             return res.status(400).json({ message: "anime_id is required" });

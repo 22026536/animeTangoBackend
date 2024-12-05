@@ -30,13 +30,12 @@ export const forgotPassword = async (req, res) => {
         // Send verification email
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
-            port: process.env.MAIL_PORT,
-            secure: false,
-            // service: 'gmail',
-            // auth: {
-            //     user: process.env.MY_EMAIL,
-            //     pass: process.env.MY_EMAIL_PASSWORD
-            // }
+            port: parseInt(process.env.MAIL_PORT),
+            service: 'gmail',
+            auth: {
+                user: process.env.MY_EMAIL,
+                pass: process.env.MY_EMAIL_PASSWORD
+            }
         });
 
         const mailOptions = {
