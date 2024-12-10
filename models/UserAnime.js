@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import AutoIncrementFactory from 'mongoose-sequence';
 
 const userAnimeSchema = new mongoose.Schema({
-    User_Anime_id: { type: Number, required: true, index: true },
+    User_Anime_id: { type: Number, index: true },
     User_id: { type: Number, required: true, index: true }, // ID của người dùng
     Anime_id: { type: Number, required: true, index: true }, // ID của anime
     LastestTimeWatched: { type: Date, required: true }, // Thời điểm xem gần nhất
@@ -12,6 +12,6 @@ const userAnimeSchema = new mongoose.Schema({
     timestamps: true, // Tự động thêm createdAt, updatedAt
 });
 const AutoIncrement = AutoIncrementFactory(mongoose);
-userAnimeSchema.plugin(AutoIncrement, { inc_field: 'user_anime_id' });
+userAnimeSchema.plugin(AutoIncrement, { inc_field: 'User_Anime_id' });
 
 export default mongoose.model('UserAnime', userAnimeSchema);
