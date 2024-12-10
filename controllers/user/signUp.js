@@ -65,7 +65,7 @@ const signUp = async (req, res) => {
         // Clear password before sending the response
         req.body.password = undefined;
         res.json({
-            message: "đăng kí thành công",
+            message: "Successful",
             success: true
         });
     } catch (error) {

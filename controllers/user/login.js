@@ -23,7 +23,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ user_name: req.body.user__name });
         if (!user) {
             return res.json({
-                message: "Username không tồn tại",
+                message: "Username not exist",
                 success: false
             });
         }
@@ -32,7 +32,7 @@ const login = async (req, res) => {
         const isMatch = await bcryptjs.compare(req.body.password, user.password);
         if (!isMatch) {
             return res.json({
-                message: "Mật khẩu không đúng",
+                message: "Password not correct",
                 success: false
             });
         }

@@ -14,8 +14,7 @@ const genAI = new GoogleGenerativeAI(k);
 const animeInfo = ""; // Toàn bộ dữ liệu anime
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    systemInstruction: "bạn là Lilia, tính cách nhiệt tình thích hỗ trợ bạn bè,là AI hỗ trợ tư vấn của trang học tiếng nhật qua anime Anime Tango"
-        + `đây là thông tin về các anime: ${animeInfo}`
+    systemInstruction: `You are Lilia, an enthusiastic personality who loves supporting friends, and the AI assistant for the Japanese learning website through anime, Anime Tango. Here is the information about the anime: ${animeInfo}`
 });
 
 const generationConfig = {
