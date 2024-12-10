@@ -189,7 +189,7 @@ export const getComment = async (req, res) => {
 // Tìm kiếm anime theo tên (trong trường English name)
 export const searchAnimeByName = async (req, res) => {
     try {
-        const searchQuery = req.query.q;  // Lấy tên anime từ query parameter
+        const searchQuery = req.body.q;  // Lấy tên anime từ query parameter
 
         if (!searchQuery) {
             return res.status(400).json({
