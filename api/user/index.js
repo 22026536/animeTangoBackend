@@ -1,5 +1,6 @@
 import express from "express";
 import routerAnime from "./anime.js";
+import routerChatBot from "./chatBot.js";
 import routerForgotPassword from "./forgotPassword.js";
 import routerLogin from "./login.js";
 import routerLogOut from "./logOut.js";
@@ -17,4 +18,5 @@ router.use("/uploadImage",routerUploadImage)
 router.use("/anime",routerAnime)
 router.use("/userInfo",routerUserInfo)
 router.use("/user",routerUser)
+router.use("/chatBot",routerChatBot)
 export default router;
