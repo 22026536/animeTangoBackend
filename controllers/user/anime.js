@@ -103,7 +103,7 @@ export const animeSearch = async (req, res) => {
 
 export const animeUnfinished = async (req, res) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.body.jwt;
 
         if (!token) {
             return res.status(401).json({
