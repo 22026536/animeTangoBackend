@@ -176,6 +176,7 @@ export const getComment = async (req, res) => {
         const user = users.find(u => u.user_id === history.User_id);
         return {
           full_name: user ? user.full_name : null, // Lấy tên đầy đủ từ User
+          user_img: user ? user.user_img : null,
           comment: history.Comment // Lấy comment từ UserHistory
         };
       });
