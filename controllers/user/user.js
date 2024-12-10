@@ -94,9 +94,9 @@ export const userWatch = async (req, res) => {
 
         const decoded = verifyToken(token);
         const user_id = decoded.id;
-    const { anime_id, episode_id, comment } = req.body;
+    const { anime_id, comment } = req.body;
   
-    if (!user_id || !anime_id || !episode_id || !comment) {
+    if (!user_id || !anime_id || !comment) {
       return res.status(400).json({ error: "Missing required fields" });
     }
   
@@ -105,7 +105,6 @@ export const userWatch = async (req, res) => {
       let userCommend = await UserCommend.findOne({
         User_id: user_id,
         Anime_id: anime_id,
-        Episode_id: episode_id,
       });
   
       if (!userCommend) {
@@ -113,7 +112,6 @@ export const userWatch = async (req, res) => {
         userCommend = new UserCommend({
           User_id: user_id,
           Anime_id: anime_id,
-          Episode_id: episode_id,
           Comment: comment,
           Time: new Date(),
         });

@@ -2,6 +2,7 @@ import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
 import UserAnime from "../../models/UserAnime.js";
+import UserCommend from '../../models/UserCommend.js';
 import UserRating from "../../models/UserRating.js";
 export const animeInfo = async (req, res) => {
     try {
@@ -145,23 +146,22 @@ export const animeUnfinished = async (req, res) => {
 };
 
 export const getComment = async (req, res) => {
-    const { anime_id, episode_id } = req.body;
+    const { anime_id } = req.body;
   
     // Kiểm tra đầu vào
-    if (!anime_id || !episode_id) {
+    if (!anime_id) {
       return res.status(400).json({ error: 'Missing required anime_id or episode_id' });
     }
   
     try {
       // Lấy danh sách UserHistory có comment
-      const userHistories = await UserHistory.find({ 
+      const userHistories = await UserCommend.find({ 
         Anime_id: anime_id, 
-        Episode_id: episode_id, 
         Comment: { $ne: null } // Chỉ lấy những bản ghi có comment
       });
   
       if (userHistories.length === 0) {
-        return res.status(404).json({ error: 'No comments found for this anime and episode' });
+        return res.json({});
       }
   
       // Lấy danh sách user_id từ UserHistory
