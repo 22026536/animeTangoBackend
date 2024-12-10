@@ -17,7 +17,7 @@ export const forgotPassword = async (req, res) => {
         const user = await User.findOne({ email: userEmail });
         if (!user) {
             return res.status(404).json({
-                message: 'Không tìm thấy người dùng',
+                message: 'Cannot find the user',
                 success: false
             });
         }
@@ -42,8 +42,8 @@ export const forgotPassword = async (req, res) => {
         const mailOptions = {
             from: process.env.MY_EMAIL,
             to: userEmail,
-            subject: 'Mã xác thực đặt lại mật khẩu',
-            text: `Mã xác thực của bạn là: ${token}. Mã này sẽ hết hạn trong 10 phút.`
+            subject: 'Token',
+            text: `Your Token is: ${token}. will be expired in 10 minutes.`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -54,7 +54,7 @@ export const forgotPassword = async (req, res) => {
                 });
             }
             return res.json({
-                message: 'Mã xác thực đã được gửi đến email của bạn!',
+                message: 'Token has been send to the email',
                 success: true
             });
         });
@@ -70,7 +70,7 @@ export const forgotPasswordCheck = async (req, res) => {
 
         if (!user) {
             return res.json({
-                message: "Không tìm thấy người dùng",
+                message: "Cannot find the user",
                 success: false
             });
         }
@@ -78,20 +78,20 @@ export const forgotPasswordCheck = async (req, res) => {
         // Check token expiration
         const expireToken = new Date(user.reset_token_expire);
         if (new Date() > expireToken) {
-            return res.json({ message: "Mã xác thực đã hết hạn", success: false });
+            return res.json({ message: "token has been expired", success: false });
         }
 
         // Compare tokens
         const isMatch = await bcryptjs.compare(req.body.token, user.reset_token);
         if (!isMatch) {
             return res.json({
-                message: "Mã xác thực không đúng",
+                message: "Token not correct",
                 success: false
             });
         }
         
         return res.json({
-            message: "Mã xác thực chính xác",
+            message: "Correct",
             success: true
         });
     } catch (error) {
@@ -106,7 +106,7 @@ export const forgotPasswordChangePassword = async (req, res) => {
         const userEmail = req.body.gmail;  // Lấy email từ session
         if (newPassword !== reNewPassword) {
             return res.json({
-                message: "nhập lại mật khẩu sai",
+                message: "repassword not correct",
                 success: false
             });
         }
@@ -121,13 +121,13 @@ export const forgotPasswordChangePassword = async (req, res) => {
 
         if (!user) {
             return res.json({
-                message: "Không tìm thấy người dùng",
+                message: "Cannot find the user",
                 success: false
             });
         }
 
         res.json({
-            message: "Đổi mật khẩu thành công",
+            message: "Change password successful",
             success: true
         });
     } catch (error) {

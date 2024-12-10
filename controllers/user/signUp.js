@@ -21,7 +21,7 @@ const signUp = async (req, res) => {
         const usernameExists = await User.findOne({ username: req.body.user__name });
         if (usernameExists) {
             return res.json({
-                message: "username đã tồn tại",
+                message: "username existed",
                 success: false
             });
         }
@@ -30,7 +30,7 @@ const signUp = async (req, res) => {
         const phoneExists = await User.findOne({ phone_number: req.body.phone__number });
         if (phoneExists) {
             return res.json({
-                message: "số điện thoại đã tồn tại",
+                message: "phone number existed",
                 success: false
             });
         }
@@ -39,7 +39,7 @@ const signUp = async (req, res) => {
         const emailExists = await User.findOne({ email: req.body.gmail });
         if (emailExists) {
             return res.json({
-                message: "gmail đã tồn tại",
+                message: "gmail existed",
                 success: false
             });
         }
