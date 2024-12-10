@@ -125,11 +125,11 @@ export const animeUnfinished = async (req, res) => {
 
         // Lấy danh sách anime chưa hoàn thành của người dùng
         const unfinishedUserAnimes = await UserAnime.find({ User_id: user_id, Status: false })
-            .sort({ lastestTimeWatched: -1 }) // Sắp xếp theo thời gian xem gần nhất
+            .sort({ LastestTimeWatched: -1 }) // Sắp xếp theo thời gian xem gần nhất
             .limit(n);
 
         // Lấy thông tin chi tiết các anime
-        const unfinishedAnimeIds = unfinishedUserAnimes.map(item => item.anime_id);
+        const unfinishedAnimeIds = unfinishedUserAnimes.map(item => item.Anime_id);
         const unfinishedAnimes = await Anime.find({
             Anime_id: { $in: unfinishedAnimeIds },
         });
