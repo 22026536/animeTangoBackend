@@ -4,6 +4,7 @@ import routerChatBot from "./chatBot.js";
 import routerForgotPassword from "./forgotPassword.js";
 import routerLogin from "./login.js";
 import routerLogOut from "./logOut.js";
+import routerRecommend from "./recommend.js";
 import routerSignUp from "./signUp.js";
 import routerUploadImage from "./uploadImage.js";
 import routerUser from "./user.js";
@@ -19,4 +20,5 @@ router.use("/anime",routerAnime)
 router.use("/userInfo",routerUserInfo)
 router.use("/user",routerUser)
 router.use("/chatBot",routerChatBot)
+router.user("/recommend",routerRecommend)
 export default router;
