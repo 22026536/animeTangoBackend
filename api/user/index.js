@@ -16,5 +16,5 @@ router.use("/forgotPassword",routerForgotPassword)
 router.use("/uploadImage",routerUploadImage)
 router.use("/anime",routerAnime)
 router.use("/userInfo",routerUserInfo)
-router.user("/user",routerUser)
+router.use("/user",routerUser)
 export default router;
