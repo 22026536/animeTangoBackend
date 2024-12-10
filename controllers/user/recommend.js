@@ -25,7 +25,7 @@ export const recommendDecisionTreeUser = async (req, res) => {
         const user_id = decoded.id;
 
         // Gửi yêu cầu POST đến API bên ngoài để nhận thông tin người dùng
-        const response = await axios.post('https://animetangorecommenddecisiontree.com/', { user_id: user_id });
+        const response = await axios.post('https://animetangorecommenddecisiontree.onrender.com/', { user_id: user_id });
 
             return res.json({
                 message: "Lấy thông tin người dùng thành công",
