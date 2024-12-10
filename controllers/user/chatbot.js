@@ -3,6 +3,7 @@ import {
 } from "@google/generative-ai";
 
 import dotenv from "dotenv";
+import Anime from "../../models/Anime.js";
 // import filmInfoForAI from "../../middlewares/user/filmInfoForAI.js";
 dotenv.config();
 const k_f = `sk-WCSlVGKGVQe4cygymbzndozDmh1g03ybMM`
@@ -11,10 +12,21 @@ const k = k_f + k_s;
 const genAI = new GoogleGenerativeAI(k);
 // const filmInfo = filmInfoForAI()
 
+const fetchAnimeInfo = async () => {
+    try {
+        const animeData = await Anime.find({});
+        return animeData;
+    } catch (error) {
+        console.error("Error fetching anime info:", error);
+        return [];
+    }
+};
+
+const animeInfo = await fetchAnimeInfo(); // Toàn bộ dữ liệu anime
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    systemInstruction: "bạn là Lilia, tính cách nhiệt tình thích hỗ trợ bạn bè,là AI hỗ trợ tư vấn của trang web đặt vé xem phim NHTT"
-        + "đây là thông tin về phim Joker 2: Điên Có Đôi, tiêu đề phim :Joker 2: Điên Có Đôi đưa Arthur Fleck đến trại tâm thần Arkham trong khi chờ xét xử cho những tội ác của hắn với tư cách là Joker. Trong lúc vật lộn với hai bản ngã của mình, Arthur không chỉ tìm thấy tình yêu đích thực mà còn khám phá ra âm nhạc luôn tồn tại trong con người hắn.;giới hạn độ tuổi :18;thời lượng 138 phút;ngày chiếu: 2024-10-16; thể loại: Drama, Thriller,Crime" + "nếu người dùng không hỏi đúng chuyên môn những thông tin được cung cấp, hãy trả lời 'Xin lỗi câu hỏi này không thuộc lĩnh vực của mình xin thông cảm'. Hãy cố gắng đừng trả lời có thông tin nhạy cảm để tránh bị vi phạm SAFETY"
+    systemInstruction: "bạn là Lilia, tính cách nhiệt tình thích hỗ trợ bạn bè,là AI hỗ trợ tư vấn của trang học tiếng nhật qua anime Anime Tango"
+        + `đây là thông tin về các anime: ${animeInfo}`
 });
 
 const generationConfig = {
