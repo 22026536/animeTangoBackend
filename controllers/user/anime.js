@@ -124,7 +124,7 @@ export const animeUnfinished = async (req, res) => {
         const { n = 10 } = req.body; // Số lượng kết quả muốn lấy (mặc định là 10)
 
         // Lấy danh sách anime chưa hoàn thành của người dùng
-        const unfinishedUserAnimes = await UserAnime.find({ User_id: user_id, status: false })
+        const unfinishedUserAnimes = await UserAnime.find({ User_id: user_id, Status: false })
             .sort({ lastestTimeWatched: -1 }) // Sắp xếp theo thời gian xem gần nhất
             .limit(n);
 
