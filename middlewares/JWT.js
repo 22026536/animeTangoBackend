@@ -7,7 +7,7 @@ const SECRET_CODE = process.env.SECRET_CODE
 export const createJWT = (payload) => {
     let token = null;
     try{
-        token = jwt.sign(payload,SECRET_CODE,{ expiresIn: '30m' });
+        token = jwt.sign(payload,SECRET_CODE,{ expiresIn: '120m' });
     } catch (err){
         console.log(err);
     }
