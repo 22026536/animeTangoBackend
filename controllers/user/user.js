@@ -68,7 +68,7 @@ export const userWatch = async (req, res) => {
         await userFavorites.save();
       }
   
-      res.status(200).json({ message: "User watch history and anime status updated successfully" });
+      res.status(200).json({ message: "User watch history and anime status updated successfully", success: true });
     } catch (error) {
       console.error("Error updating user watch data:", error);
       res.status(500).json({ error: "Internal server error" });
