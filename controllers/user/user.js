@@ -1,6 +1,6 @@
 import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import UserAnime from "../../models/UserAnime.js";
-import UserCommend from "../../models/UserCommend.js";
+import UserComment from "../../models/UserComment.js";
 import UserFavorites from "../../models/UserFavorites.js";
 import UserRating from "../../models/UserRating.js";
 // **Hàm userWatch**
@@ -101,31 +101,32 @@ export const userWatch = async (req, res) => {
     }
   
     try {
-      // **Cập nhật hoặc thêm UserCommend**
-      let userCommend = await UserCommend.findOne({
+      // **Cập nhật hoặc thêm UserComment**
+      let userComment = await UserComment.findOne({
         User_id: user_id,
         Anime_id: anime_id,
       });
   
-      if (!userCommend) {
+      if (!userComment) {
         // Nếu chưa tồn tại, thêm mới
-        userCommend = new UserCommend({
+        userComment = new UserComment({
           User_id: user_id,
           Anime_id: anime_id,
           Comment: comment,
           Time: new Date(),
         });
-        await userCommend.save();
+        await userComment.save();
       } else {
         // Nếu đã tồn tại, cập nhật comment
-        userCommend.Comment = comment;
-        userCommend.Time = new Date();
-        await userCommend.save();
+        userComment.Comment = comment;
+        userComment.Time = new Date();
+        await userComment.save();
       }
   
       res.status(200).json({
         message: "Comment updated successfully",
-        data: userCommend,
+        data: userComment,
+        success: true,
       });
     } catch (error) {
       console.error("Error updating comment:", error);

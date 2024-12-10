@@ -1,8 +1,9 @@
 import { isTokenExpired, verifyToken } from '../../middlewares/JWT.js';
 import Anime from "../../models/Anime.js";
 import AnimeEpisode from "../../models/AnimeEpisode.js";
+import User from '../../models/User.js';
 import UserAnime from "../../models/UserAnime.js";
-import UserCommend from '../../models/UserCommend.js';
+import UserComment from '../../models/UserComment.js';
 import UserRating from "../../models/UserRating.js";
 export const animeInfo = async (req, res) => {
     try {
@@ -155,7 +156,7 @@ export const getComment = async (req, res) => {
   
     try {
       // Lấy danh sách UserHistory có comment
-      const userHistories = await UserCommend.find({ 
+      const userHistories = await UserComment.find({ 
         Anime_id: anime_id, 
         Comment: { $ne: null } // Chỉ lấy những bản ghi có comment
       });
