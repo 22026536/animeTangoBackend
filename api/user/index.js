@@ -20,5 +20,5 @@ router.use("/anime",routerAnime)
 router.use("/userInfo",routerUserInfo)
 router.use("/user",routerUser)
 router.use("/chatBot",routerChatBot)
-router.user("/recommend",routerRecommend)
+router.use("/recommend",routerRecommend)
 export default router;
