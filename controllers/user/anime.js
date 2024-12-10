@@ -185,3 +185,36 @@ export const getComment = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+
+// Tìm kiếm anime theo tên (trong trường English name)
+export const searchAnimeByName = async (req, res) => {
+    try {
+        const searchQuery = req.query.q;  // Lấy tên anime từ query parameter
+
+        if (!searchQuery) {
+            return res.status(400).json({
+                message: "Tên anime không được để trống.",
+                success: false
+            });
+        }
+
+        // Tìm anime có tên tiếng Anh chứa searchQuery (dùng phương thức tìm kiếm không phân biệt chữ hoa chữ thường)
+        const animeResults = await Anime.find({
+            'English name': { $regex: searchQuery, $options: 'i' }  // Tìm kiếm không phân biệt chữ hoa chữ thường
+        });
+
+        // Trả về kết quả tìm kiếm
+        return res.status(200).json({
+            message: "Tìm kiếm thành công",
+            success: true,
+            anime: animeResults
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Lỗi server",
+            success: false,
+            error: error.message
+        });
+    }
+};
